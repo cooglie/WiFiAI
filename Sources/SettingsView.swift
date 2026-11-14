@@ -21,8 +21,7 @@ struct SettingsView: View {
                     store.save()
                     store.loadModels()
                 }) {
-                    if store.busy { ProgressView().scaleEffect(0.7) }
-                    else { Text("Verbindung testen und Modelle laden") }
+                    Text(store.busy ? "Lade Modelle …" : "Verbindung testen und Modelle laden")
                 }.disabled(store.busy)
                 Picker("Modell", selection: $store.selectedModel) {
                     if store.models.isEmpty { Text("Keine Modelle geladen").tag("") }
