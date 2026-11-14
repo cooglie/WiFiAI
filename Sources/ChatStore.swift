@@ -94,7 +94,7 @@ final class ChatStore: ObservableObject {
         guard !text.isEmpty, !busy else { return }
         guard !selectedModel.isEmpty else { error = "Bitte zuerst ein Modell laden."; return }
         guard let base = baseURL() else { error = "Ungültige Server-Adresse."; return }
-        guard let idx = sessions.firstIndex(where: { $0.id == selectedID }) else { return }
+        guard let targetChatID = selectedID, let idx = sessions.firstIndex(where: { $0.id == targetChatID }) else { return }
 
         sessions[idx].messages.append(ChatMessage(role: .user, content: text))
         sessions[idx].updatedAt = Date()
@@ -126,7 +126,7 @@ final class ChatStore: ObservableObject {
                     let answer: String
                     if self.backend == .ollama { answer = try JSONDecoder().decode(OllamaReply.self, from: data).message.content }
                     else { answer = try JSONDecoder().decode(OpenAIReply.self, from: data).choices.first?.message.content ?? "" }
-                    guard let i = self.sessions.firstIndex(where: { $0.id == self.selectedID }) else { return }
+                    guard let i = self.sessions.firstIndex(where: { $0.id == targetChatID }) else { return }
                     self.sessions[i].messages.append(ChatMessage(role: .assistant, content: answer))
                     self.sessions[i].updatedAt = Date()
                     self.status = "Bereit"
