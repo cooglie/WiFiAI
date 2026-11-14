@@ -1,36 +1,41 @@
 # WiFiAI
 
-Native standalone macOS chat client for a local AI server on your Wi-Fi.
+WiFiAI is an early macOS project intended to become a client for AI servers running on the same local network.
 
-- macOS 10.15 Catalina or newer
-- Intel x86_64 build (universal/Apple Silicon can be added later)
-- Ollama API and llama.cpp OpenAI-compatible API
-- Chat history stored locally in Application Support
-- No Python, Node.js, browser, cloud account or API key required on the Mac running this app
+## Current status
 
-## Server setup
+**The current build does not yet provide a working, usable graphical user interface.** The app bundle can be compiled for Intel Macs, but a successful compile does not mean that the interface and chat workflow are complete or tested.
 
-The app is a standalone **client**. The AI model and inference server run on another computer on your LAN.
+This is an experimental development build, not a finished chat application.
 
-### Ollama
-Configure Ollama on the server to listen on your LAN interface, for example `OLLAMA_HOST=0.0.0.0:11434`, then pull a model such as `ollama pull llama3.2`. In WiFiAI use the server URL `http://SERVER-IP:11434`.
+## Planned functionality
 
-### llama.cpp
-Start the server on the other computer, for example:
-```bash
-./llama-server -m /path/to/model.gguf --host 0.0.0.0 --port 8080
-```
-In WiFiAI use `http://SERVER-IP:8080`.
+- Connect to an AI server on the local network
+- Support for Ollama
+- Support for llama.cpp using its OpenAI-compatible server API
+- Local chat history and connection settings
 
-Allow the port through the server computer's firewall. Use only trusted LANs: this initial version does not add authentication or TLS.
+These features should be considered planned or under development until they have been tested in a working app build.
+
+## Platform
+
+- macOS 10.15 Catalina or newer is the intended minimum
+- Intel x86_64 build
+- AI server and model are expected to run on another computer
+- The app does not bundle AI models or an inference server
+
+## Security
+
+Do not expose an AI server directly to the public internet. Use only trusted networks and configure authentication and firewall rules on the server where available.
 
 ## Build
-Open `WiFiAI.xcodeproj` in Xcode and build the `WiFiAI` scheme. Deployment target: macOS 10.15.
 
-## Release
-Pushing to `main` runs the GitHub Actions workflow. It builds `WiFiAI.app`, packages it as `WiFiAI-macOS.zip`, and publishes the v0.1.0 GitHub Release.
+The repository contains a Swift macOS project. Building through Xcode requires Xcode; the standalone command-line build is experimental and may require additional compatibility fixes.
 
-The GitHub runner build is not a substitute for testing on a physical Catalina Intel Mac.
+## Releases
+
+See the [GitHub Releases](https://github.com/cooglie/WiFiAI/releases) page for available test builds. Release assets should be treated as experimental until the GUI and server connection have been verified.
 
 ## License
+
 MIT
