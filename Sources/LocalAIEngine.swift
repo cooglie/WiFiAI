@@ -163,9 +163,8 @@ final class LocalAIEngine: ObservableObject {
             let task = Process()
             task.executableURL = binary
             task.arguments = ["--model", model, "--host", "0.0.0.0", "--port", "8080", "--ctx-size", "2048"]
-            let output = Pipe()
-            task.standardOutput = output
-            task.standardError = output
+            task.standardOutput = FileHandle.nullDevice
+            task.standardError = FileHandle.nullDevice
             task.terminationHandler = { [weak self] _ in
                 DispatchQueue.main.async { self?.serverRunning = false; self?.status = "KI-Server gestoppt" }
             }
