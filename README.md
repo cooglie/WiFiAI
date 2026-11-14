@@ -1,40 +1,32 @@
 # WiFiAI
 
-WiFiAI is an early macOS project intended to become a client for AI servers running on the same local network.
+WiFiAI is a native macOS app that is being developed to download GGUF models, run them locally with llama.cpp, and expose the local model through an HTTP API on the Mac.
 
-## Current status
+## Current development build
 
-**The current build does not yet provide a working, usable graphical user interface.** The app bundle can be compiled for Intel Macs, but a successful compile does not mean that the interface and chat workflow are complete or tested.
+The project now contains:
+- A model catalogue with direct GGUF downloads (Qwen 2.5 0.5B Instruct and TinyLlama 1.1B Chat).
+- A first engine installer that searches official llama.cpp GitHub release assets for a macOS Intel archive.
+- A local server launcher configured for port 8080 and host 0.0.0.0.
+- Local model storage under ~/Library/Application Support/WiFiAI/Models.
 
-This is an experimental development build, not a finished chat application.
+**Important:** This is an early, unverified implementation. The engine asset discovery depends on the naming of upstream release assets, and this code has not yet been built or tested end-to-end on a Mac. A successful source commit is not a tested app release.
 
-## Planned functionality
+## How it is intended to work
 
-- Connect to an AI server on the local network
-- Support for Ollama
-- Support for llama.cpp using its OpenAI-compatible server API
-- Local chat history and connection settings
+1. Open WiFiAI and open “KI / Modelle”.
+2. Install the llama.cpp engine.
+3. Download a GGUF model.
+4. Select the model and start the KI server.
+5. Connect from another device on the same trusted Wi-Fi using http://MAC-IP:8080.
 
-These features should be considered planned or under development until they have been tested in a working app build.
+The server currently has no authentication. Do not expose port 8080 to the public internet or an untrusted network.
 
-## Platform
+## Requirements
 
-- macOS 10.15 Catalina or newer is the intended minimum
-- Intel x86_64 build
-- AI server and model are expected to run on another computer
-- The app does not bundle AI models or an inference server
-
-## Security
-
-Do not expose an AI server directly to the public internet. Use only trusted networks and configure authentication and firewall rules on the server where available.
-
-## Build
-
-The repository contains a Swift macOS project. Building through Xcode requires Xcode; the standalone command-line build is experimental and may require additional compatibility fixes.
-
-## Releases
-
-See the [GitHub Releases](https://github.com/cooglie/WiFiAI/releases) page for available test builds. Release assets should be treated as experimental until the GUI and server connection have been verified.
+- Intel macOS target: macOS 10.15 or newer.
+- A compatible llama.cpp macOS x64 release asset.
+- Enough RAM and disk space for the selected model. Small models are recommended for older Intel Macs.
 
 ## License
 
