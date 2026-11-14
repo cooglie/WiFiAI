@@ -7,10 +7,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let store = ChatStore()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        NSApp.setActivationPolicy(.regular)
+
         let root = ContentView().environmentObject(store)
         let hosting = NSHostingView(rootView: root)
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 980, height: 680),
+            contentRect: NSRect(x: 0, y: 0, width: 1040, height: 720),
             styleMask: [.titled, .closable, .miniaturizable, .resizable],
             backing: .buffered,
             defer: false
@@ -18,7 +20,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         window.title = "WiFiAI"
         window.contentView = hosting
         window.center()
-        window.minSize = NSSize(width: 700, height: 500)
+        window.minSize = NSSize(width: 760, height: 540)
+        window.isReleasedWhenClosed = false
         window.makeKeyAndOrderFront(nil)
         self.window = window
         NSApp.activate(ignoringOtherApps: true)
