@@ -22,7 +22,7 @@ struct ContentView: View {
         }
         .frame(minWidth: 760, minHeight: 520)
         .sheet(isPresented: $showingSettings) {
-            SettingsView().environmentObject(store)
+            SettingsView().environmentObject(store).environmentObject(engine)
         }
         .alert(item: Binding<AlertMessage?>(
             get: { store.error.map { AlertMessage(text: $0) } },
