@@ -243,7 +243,6 @@ struct ContentView: View {
                 .foregroundColor(.secondary)
             Text(message.content)
                 .font(.system(size: 13))
-                .textSelection(.enabled)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(13)
