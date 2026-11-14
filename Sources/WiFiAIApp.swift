@@ -5,11 +5,13 @@ import SwiftUI
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var window: NSWindow?
     private let store = ChatStore()
+    private let engine = LocalAIEngine()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.regular)
-
-        let root = ContentView().environmentObject(store)
+        let root = ContentView()
+            .environmentObject(store)
+            .environmentObject(engine)
         let hosting = NSHostingView(rootView: root)
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 1040, height: 720),
