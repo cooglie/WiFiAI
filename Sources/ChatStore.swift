@@ -2,8 +2,8 @@ import Foundation
 import Combine
 
 final class ChatStore: ObservableObject {
-    @Published var backend: AIBackend = .ollama
-    @Published var serverURL = "http://192.168.1.50:11434"
+    @Published var backend: AIBackend = .llamaCpp
+    @Published var serverURL = "http://127.0.0.1:8080"
     @Published var selectedModel = ""
     @Published var models: [String] = []
     @Published var sessions: [ChatSession] = []
@@ -22,7 +22,7 @@ final class ChatStore: ObservableObject {
         let folder = base.appendingPathComponent("WiFiAI", isDirectory: true)
         try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
         historyURL = folder.appendingPathComponent("chats.json")
-        backend = AIBackend(rawValue: defaults.string(forKey: "backend") ?? "Ollama") ?? .ollama
+        backend = AIBackend(rawValue: defaults.string(forKey: "backend") ?? "llama.cpp") ?? .ollama
         serverURL = defaults.string(forKey: "serverURL") ?? serverURL
         selectedModel = defaults.string(forKey: "model") ?? ""
         if let data = try? Data(contentsOf: historyURL),
