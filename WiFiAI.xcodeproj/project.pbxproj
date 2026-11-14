@@ -7,6 +7,7 @@
  A00000000000000000000003 = {isa = PBXBuildFile; fileRef = B00000000000000000000003; };
  A00000000000000000000004 = {isa = PBXBuildFile; fileRef = B00000000000000000000004; };
  A00000000000000000000005 = {isa = PBXBuildFile; fileRef = B00000000000000000000005; };
+ A00000000000000000000008 = {isa = PBXBuildFile; fileRef = B00000000000000000000008; };
  B00000000000000000000001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiAIApp.swift; sourceTree = "<group>"; };
  B00000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
  B00000000000000000000003 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStore.swift; sourceTree = "<group>"; };
