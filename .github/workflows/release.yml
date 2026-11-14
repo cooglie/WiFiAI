@@ -1,0 +1,37 @@
+name: Build and publish WiFiAI
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Intel macOS app
+        run: |
+          xcodebuild -project WiFiAI.xcodeproj -scheme WiFiAI -configuration Release \
+            -derivedDataPath build ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO \
+            MACOSX_DEPLOYMENT_TARGET=10.15 CODE_SIGNING_ALLOWED=NO
+      - name: Package standalone app
+        run: |
+          mkdir -p dist
+          ditto -c -k --sequesterRsrc --keepParent \
+            build/Build/Products/Release/WiFiAI.app dist/WiFiAI-macOS-Intel.zip
+      - name: Publish v0.1.0 release
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.1.0
+          name: WiFiAI v0.1.0
+          target_commitish: ${{ github.sha }}
+          body: |
+            First standalone WiFiAI macOS client release.
+            Requires macOS 10.15 or newer. Intel x86_64 build.
+            Connects to Ollama or llama.cpp running on another computer in your local network.
+          files: dist/WiFiAI-macOS-Intel.zip
