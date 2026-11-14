@@ -26,7 +26,7 @@ struct ContentView: View {
                     }
                 }
                 Divider()
-                Button(action: { settings = true }) { Label("Einstellungen", systemImage: "gear") }.padding()
+                Button(action: { settings = true }) { HStack { Image(systemName: "gear"); Text("Einstellungen") } }.padding()
                 Text(store.status).font(.caption).foregroundColor(.secondary).padding(.bottom, 8)
             }.frame(minWidth: 190, idealWidth: 220, maxWidth: 250)
 
