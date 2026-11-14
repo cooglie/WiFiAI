@@ -69,6 +69,17 @@ struct SettingsView: View {
                         Text(engine.serverRunning ? "Läuft" : "Gestoppt")
                             .font(.caption).foregroundColor(engine.serverRunning ? .green : .secondary)
                     }
+                    Button("Mit eigener KI verbinden / Modelle laden") {
+                        store.backend = .llamaCpp
+                        store.serverURL = engine.serverURL
+                        store.save()
+                        store.loadModels()
+                    }.disabled(!engine.serverRunning || store.busy)
+                    if !store.models.isEmpty {
+                        Picker("Chat-Modell", selection: $store.selectedModel) {
+                            ForEach(store.models, id: \.self) { name in Text(name).tag(name) }
+                        }
+                    }
                     Text("Port: 8080 · LAN-Adresse: http://MAC-IP:8080")
                         .font(.system(.caption, design: .monospaced))
                     Text("Der Server bindet an alle Netzwerk-Schnittstellen. Nur in vertrauenswürdigen WLANs verwenden; aktuell ohne Passwortschutz.")
