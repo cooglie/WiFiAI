@@ -3,6 +3,7 @@ import AppKit
 
 struct ContentView: View {
     @EnvironmentObject var store: ChatStore
+    @EnvironmentObject var engine: LocalAIEngine
     @State private var draft = ""
     @State private var showingSettings = false
 
@@ -134,7 +135,7 @@ struct ContentView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(store.selectedModel.isEmpty ? "Dein lokaler KI-Chat" : store.selectedModel)
                         .font(.headline)
-                    Text(store.backend.rawValue + "  ·  " + store.serverURL)
+                    Text(engine.serverRunning ? "Eigene KI läuft · Port 8080" : "Lokale KI · " + engine.status)
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .lineLimit(1)
@@ -187,7 +188,7 @@ struct ContentView: View {
                     }
                     .disabled(!canSend)
                 }
-                Text("Deine Nachrichten werden an den konfigurierten Server in deinem Netzwerk gesendet.")
+                Text("Deine Nachrichten werden lokal von WiFiAI verarbeitet.")
                     .font(.system(size: 10))
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -206,13 +207,13 @@ struct ContentView: View {
                 .foregroundColor(.accentColor)
             Text("Deine KI. Dein Netzwerk.")
                 .font(.system(size: 25, weight: .bold))
-            Text("Verbinde WiFiAI mit Ollama oder llama.cpp auf einem anderen Gerät im selben WLAN.")
+            Text("Lade ein Modell herunter und starte deine eigene KI direkt auf diesem Mac.")
                 .font(.system(size: 13))
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 390)
             Button(action: { showingSettings = true }) {
-                Text("Jetzt Server verbinden")
+                Text("Modelle & KI-Server einrichten")
                     .fontWeight(.semibold)
                     .padding(.horizontal, 18)
                     .padding(.vertical, 9)
